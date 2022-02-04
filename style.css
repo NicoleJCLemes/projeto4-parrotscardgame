@@ -23,6 +23,23 @@ h1 {
     text-align: center;
 }
 
+main {
+    margin: 0px 116px 153px 122px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.total-card {
+    transform-style: preserve-3d;
+    transition: all .5s;
+    display: flex;
+    justify-content: center;
+    width: 117px;
+    height: 146px;
+    margin-bottom: 34px;
+}
+
 .card {
     width: 117px;
     height: 146px;
@@ -30,6 +47,8 @@ h1 {
     border: 1px solid #99CEA8;
     border-radius: 5px;
     margin-bottom: 34px;
+    backface-visibility: hidden;
+    position: absolute;
 }
 
 .card img {
@@ -38,9 +57,10 @@ h1 {
     margin: 24px 7px 22px 10px;
 }
 
-main {
-    margin: 0px 116px 153px 122px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.back {
+    transform: rotateY(180deg);
+}
+
+.flip {
+    transform: rotateY(180deg);
 }
