@@ -1,4 +1,4 @@
-let cartas = prompt("Com quantas cartas deseja jogar? Escolha um número par entre 4 e 14");
+let cartas = parseInt(prompt("Com quantas cartas deseja jogar? Escolha um número par entre 4 e 14"));
 let qtdCartas = [];
 let qtdCartasEmbaralhadas = [];
 let indiceCartas = [];
@@ -27,11 +27,11 @@ function aparecerCartas() {
     for (let j = 0; j < cartas; j++) {
         const adicionar = document.querySelector("main");
         adicionar.innerHTML = adicionar.innerHTML + `
-        <div class="total-card" onclick="girarCarta(this)">
-            <div class="front card">
+        <div data-identifier="card" class="total-card" onclick="girarCarta(this)">
+            <div data-identifier="back-face" class="front card">
                 <img src="arquivos/front.png" alt="papagaio">
             </div>
-            <div class="back card">
+            <div data-identifier="front-face" class="back card">
                 <img src="${qtdCartasEmbaralhadas[j]}" alt="gif papagaio">
             </div>
         </div>
@@ -41,33 +41,28 @@ function aparecerCartas() {
 
 aparecerCartas();
 
-/*function girarCarta(cardEscolhido) {
-    cardEscolhido.classList.toggle("flip");
-}*/
-
 let imagem = [];
 let jogadas = 0;
 let primeiraCarta = 0;
 let segundaCarta = 0;
-// let cardVirado = null;
+let jogarNovamente = "";
 
 function girarCarta(cardEscolhido) {
     
     jogadas++;
-
+    
     if (imagem.length < 2){
         cardEscolhido.classList.add("flip");
+        cardEscolhido.classList.add("desativarClick");
         imagem.push(cardEscolhido.querySelector(".back img"));
+        console.log(imagem)
     }
 
     primeiraCarta = imagem[0];
     segundaCarta = imagem[1];
 
     if (imagem.length == 2) {
-        console.log(segundaCarta);
         if(primeiraCarta.parentNode.innerHTML !== segundaCarta.parentNode.innerHTML){
-            console.log(segundaCarta);
-            console.log(primeiraCarta);
             setTimeout(removerFlip,1000);
         } else {
             imagem = [];
@@ -77,21 +72,26 @@ function girarCarta(cardEscolhido) {
     function removerFlip() {
         imagem[0].parentNode.parentNode.classList.remove("flip");
         imagem[1].parentNode.parentNode.classList.remove("flip");
+        imagem[0].parentNode.parentNode.classList.remove("desativarClick");
+        imagem[1].parentNode.parentNode.classList.remove("desativarClick");
         imagem = [];
     }
 
-    //console.log(segundaCarta);
-
-    // if (imagem[0] !== imagem[1]) {
-    //     let primeiraCarta = document.querySelectorAll(".flip");
-    //      if (primeiraCarta !== null) {
-    //          primeiraCarta[0].classList.remove("flip");
-    //          console.log(primeiraCarta);
-    //      }
-    // }
-
-    
+    setTimeout(terminarJogo,100);
 }
 
+function terminarJogo() {
+    if(document.querySelectorAll(".flip").length === cartas){
+        alert(`Você ganhou em ${jogadas} jogadas!`);
+        jogarNovamente = prompt(`Você quer jogar novamente? Responda s ou n`);
+        jogarNovamente = jogarNovamente.toUpperCase()
 
+        if(jogarNovamente === 'S') {
+            document.location.reload(true);
+        } else {
+            alert("Obrigada!");
+        }
+    }
+    
+}
    
